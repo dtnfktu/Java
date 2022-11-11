@@ -65,5 +65,6 @@ public class Calc
 
         }
         logger.log(Level.INFO, "Завершение работы");
+        in.close();
     }
 }
