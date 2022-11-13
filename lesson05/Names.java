@@ -1,4 +1,16 @@
-package lesson05;
+// Пусть дан список сотрудников: Иван Иванов...
+// Написать программу, которая найдет и выведет повторяющиеся имена с количеством повторений. 
+// Отсортировать по убыванию популярности Имени.
+
+// Решение.
+// Чтобы не вводить имена с консоли, они считываются из файла staff.txt
+// В файле каждые Имя и Фамилия записаны с новой строки. Сначала Имя, затем, через пробел, Фамилия
+// Имена заносятся в LinkedList
+// Создаём HashMap "countNames", в котром Имя - ключ,значение - количество повторений
+// Пробегаемся по LinkedList, отделяя имена и фамилии.
+// Если в HashMap текущего имени (ключа) еще нет, то записываем его со значением 1
+// Если же имя уже есть, то увеличиваем значение на +1.
+
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -7,7 +19,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.TreeMap;
+import java.util.Map;
+
 
 
 public class Names {
@@ -27,15 +40,20 @@ public class Names {
             countNames.put(nam, counter);
         }
 
-        // выводим результат
-        for(String nam : countNames.keySet()) {
-            System.out.println(countNames.get(nam) + " - " + nam);
-        }
+        // выводим результат - подсмотрено на stackoverflow.com ))
+        countNames.entrySet().stream().sorted(Map.Entry.<String, Integer>comparingByValue().reversed()).forEach(System.out::println);
+
+        // Но нас интересуют повторяющиеся имена, т.е. значения > 1
+        LinkedList<Map> answer = new LinkedList<>();
+        for(countNames.)
+        
+
 
         
 
     }
 
+    // считываем список сотрудников построчно и записываем его в LinkedList
     public static LinkedList<String> readFromFile(String fileName){
         LinkedList<String> list = new LinkedList<>();
         try {
@@ -56,7 +74,5 @@ public class Names {
         }
         return list;
     }
-
-
 
 }

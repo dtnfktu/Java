@@ -9,17 +9,20 @@
 // Далее проверяется количество ферзей на доске. Если их 8 - решение найдено, иначе запускается поиск нового решения.
 
 
-package lesson05;
-
 class chess {
     final public static int BOARD_SIZE = 8;     // размерность шахматной доски
     public static void main(String[] args) {
         // Задаём шахматную доску
         int[][] chessBoard = new int[BOARD_SIZE][BOARD_SIZE];
-        while (countQueens(chessBoard) != 8) eigthQueens(chessBoard);
+        int counter = 0;                        // ради любопытства - на каком варианте будет найдено решение
+        while (countQueens(chessBoard) != 8) {
+            eigthQueens(chessBoard);
+            counter++;
+        }
       
         printBoard(chessBoard);
         System.out.println("\n" + printAnswer(chessBoard));
+        System.out.println("Found on step : " + counter);
     }
 
     // вывод схемы шахматной доски с ферзями в консоль
