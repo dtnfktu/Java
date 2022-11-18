@@ -31,26 +31,28 @@ public class Names {
 
         for(String name: names) {
             String nam = name.split(" ")[0];        // первое слово - имя
-            int counter;
             if (!countNames.containsKey(nam)) {
-                counter = 1;                                // если имя встретилось впервые
+                countNames.put(nam, 1);                         // имя встретилось впервые
             } else {
-                counter = countNames.get(nam) + 1;          // если имя уже было
+                countNames.put(nam, countNames.get(nam) + 1);          // имя встречалось
             }
-            countNames.put(nam, counter);
+         }
+
+        // Удаляем неповторяющиеся имена - те, у которых количество повторений =1
+        // Сначала находим эти имена и собираем в отдельный LinkedList
+        LinkedList<String> keyForDel = new LinkedList<>();
+        for(String key : countNames.keySet()){
+            if (countNames.get(key) == 1) {
+                keyForDel.add(key);
+            }
+        // А затем удаляем их из HashMap, удаление элемента Map преборе этого Map (в предыдущем цикле) не допустимо
+        }
+        for(String key : keyForDel) {
+            countNames.remove(key);
         }
 
         // выводим результат - подсмотрено на stackoverflow.com ))
         countNames.entrySet().stream().sorted(Map.Entry.<String, Integer>comparingByValue().reversed()).forEach(System.out::println);
-
-        // Но нас интересуют повторяющиеся имена, т.е. значения > 1
-        LinkedList<Map> answer = new LinkedList<>();
-        for(countNames.)
-        
-
-
-        
-
     }
 
     // считываем список сотрудников построчно и записываем его в LinkedList
@@ -74,5 +76,4 @@ public class Names {
         }
         return list;
     }
-
 }

@@ -1,54 +1,68 @@
 // Реализовать структуру телефонной книги с помощью HashMap. Учесть, что у одного человека может быть несколько телефонных номеров
 
+// Решение.
+// Телефонный справочник представляет собой HashMap
+// где ключ - имя контакта, значение - список (LinkedList) номеров телефонов данного контакта
+// В задании требовалось реализовать структуру, она реализована (один из возможных вариантов)
+// Для наглядности реализована функция добавления номера телефона и вывод телефонной книги.
+// При добавлении: если контакт с заданным именем уже есть, то к нему добавляется новый номер, если нет - то добавляется контакт с номером
 
-package lesson05;
+// Никак не разберусь с кодировкой. При вводе с консоли в Windows на кириллице отображается абракадабра, в Linux - проблем нет
+// Поэтому лучше имена вводить латиницей (John, Paul, Mary etc)
+
 
 import java.util.HashMap;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.LinkedList;
-
+import java.util.Scanner;
 
 public class phonebook {
     public static void main(String[] args) {
         HashMap<String,LinkedList<String>> phBook = new HashMap<>();
-        LinkedList<String> list = readFromFile("staff.txt");
+        Scanner in = new Scanner(System.in);
+        String command = "";
 
-        for(String names:list) {
-            String name
+        while (!command.equals("exit")){
+            System.out.println("1 - Добавить в справочник");
+            System.out.println("2 - Показать справочник");
+            System.out.println("exit - для завершения работы");
+            command = in.nextLine();
+            if (command.equals("1")) {
+                addAbonent(phBook);
+            } else {
+                printBoook(phBook);
+            }
         }
-
-
-
+        in.close();
     }
         
-    public static LinkedList<String> readFromFile(String fileName){
-        LinkedList<String> list = new LinkedList<>();
-        try {
-            FileReader fr = new FileReader(new File(fileName));
-            //создаем BufferedReader с существующего FileReader для построчного считывания
-            BufferedReader reader = new BufferedReader(fr);
-            // считаем сначала первую строку
-            String line = reader.readLine();
-            while (line != null) {
-                System.out.println(line);
-                // считываем остальные строки в цикле
-                line = reader.readLine();
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+    // добавление телефонного номера - возвращает имя абонента
+    public static void addAbonent(HashMap<String,LinkedList<String>> phoneBook){
+        Scanner in = new Scanner(System.in);
+        LinkedList<String> phones;
+        System.out.print("Введите имя абонента : ");
+        String name = in.nextLine();
+        System.out.print("Введите телефонный номер : ");
+        String phone = in.nextLine();
+        //in.close();
+        if (phoneBook.containsKey(name)) {          // Если в справочнике уже есть контакт с таким именем
+            phones = phoneBook.get(name);           // то к списку его номеров добавляется
+            phones.add(phone);                      // только что введенный
+        } else {
+            phones = new LinkedList<>();            // Новый контакт
+            phones.add(phone);
+            phoneBook.put(name, phones);
         }
-        return list;
+        //return name;
     }
 
-
-
-
-
-
+    // Вывод содержимого телефонного справочника
+    public static void printBoook(HashMap<String,LinkedList<String>> book){
+        for(String name : book.keySet()){
+            System.out.println(name + ":");         // Имя контакта
+            LinkedList<String> phones = book.get(name);
+            for(String number : phones){
+                System.out.println(" " + number);   // а здесь его номера телефонов
+            }
+        }
+    }
 }
